@@ -52,7 +52,17 @@ class ASRProvider(ASRProviderBase):
                 "model.int8.onnx": os.path.join(self.model_dir, "model.int8.onnx"),
                 "tokens.txt": os.path.join(self.model_dir, "tokens.txt"),
             }
-            download_model_id = "csukuangfj/sherpa-onnx-paraformer-zh-small-2024-03-09"
+            # Paraformer 模型不在 ModelScope 上，需手动下载
+            for file_name, file_path in model_files.items():
+                if not os.path.isfile(file_path):
+                    raise FileNotFoundError(
+                        f"Paraformer 模型文件缺失: {file_path}\n"
+                        "请手动下载模型：\n"
+                        "  wget https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/"
+                        "sherpa-onnx-paraformer-zh-small-2024-03-09.tar.bz2\n"
+                        "  tar xvjf sherpa-onnx-paraformer-zh-small-2024-03-09.tar.bz2\n"
+                        "  mv sherpa-onnx-paraformer-zh-small-2024-03-09/* models/sherpa-onnx-paraformer-zh-small-2024-03-09/"
+                    )
         else:
             model_files = {
                 "model.int8.onnx": os.path.join(self.model_dir, "model.int8.onnx"),
@@ -60,8 +70,7 @@ class ASRProvider(ASRProviderBase):
             }
             download_model_id = "pengzhendong/sherpa-onnx-sense-voice-zh-en-ja-ko-yue"
 
-        # 下载并检查模型文件
-        try:
+            # SenseVoice 模型可从 ModelScope 自动下载
             for file_name, file_path in model_files.items():
                 if not os.path.isfile(file_path):
                     logger.bind(tag=TAG).info(f"正在下载模型文件: {file_name} (from {download_model_id})")
@@ -70,16 +79,11 @@ class ASRProvider(ASRProviderBase):
                         file_path=file_name,
                         local_dir=self.model_dir,
                     )
-
                     if not os.path.isfile(file_path):
                         raise FileNotFoundError(f"模型文件下载失败: {file_path}")
 
-            self.model_path = model_files["model.int8.onnx"]
-            self.tokens_path = model_files["tokens.txt"]
-
-        except Exception as e:
-            logger.bind(tag=TAG).error(f"模型文件处理失败: {str(e)}")
-            raise
+        self.model_path = model_files["model.int8.onnx"]
+        self.tokens_path = model_files["tokens.txt"]
 
         with CaptureOutput():
             if self.model_type == "paraformer":
