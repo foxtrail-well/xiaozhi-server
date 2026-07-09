@@ -1,0 +1,102 @@
+(xiaozhi) root@iZbp1af2u8l2dedugzbauhZ:~/xiaozhi-server/main/xiaozhi-server# python app.py
+Traceback (most recent call last):
+  File "/root/xiaozhi-server/main/xiaozhi-server/app.py", line 9, in <module>
+    from core.http_server import SimpleHttpServer
+  File "/root/xiaozhi-server/main/xiaozhi-server/core/http_server.py", line 5, in <module>
+    from core.api.vision_handler import VisionHandler
+  File "/root/xiaozhi-server/main/xiaozhi-server/core/api/vision_handler.py", line 7, in <module>
+    from core.utils.vllm import create_instance
+  File "/root/xiaozhi-server/main/xiaozhi-server/core/utils/vllm.py", line 12, in <module>
+    logger = setup_logging()
+  File "/root/xiaozhi-server/main/xiaozhi-server/config/logger.py", line 49, in setup_logging
+    check_config_file()
+  File "/root/xiaozhi-server/main/xiaozhi-server/config/settings.py", line 23, in check_config_file
+    config = load_config()
+  File "/root/xiaozhi-server/main/xiaozhi-server/config/config_loader.py", line 41, in load_config
+    custom_config = read_config(custom_config_path)
+  File "/root/xiaozhi-server/main/xiaozhi-server/config/config_loader.py", line 23, in read_config
+    config = yaml.safe_load(file)
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/yaml/__init__.py", line 125, in safe_load
+    return load(stream, SafeLoader)
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/yaml/__init__.py", line 81, in load
+    return loader.get_single_data()
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/yaml/constructor.py", line 49, in get_single_data
+    node = self.get_single_node()
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/yaml/composer.py", line 36, in get_single_node
+    document = self.compose_document()
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/yaml/composer.py", line 55, in compose_document
+    node = self.compose_node(None, None)
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/yaml/composer.py", line 84, in compose_node
+    node = self.compose_mapping_node(anchor)
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/yaml/composer.py", line 133, in compose_mapping_node
+    item_value = self.compose_node(node, item_key)
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/yaml/composer.py", line 64, in compose_node
+    if self.check_event(AliasEvent):
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/yaml/parser.py", line 98, in check_event
+    self.current_event = self.state()
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/yaml/parser.py", line 449, in parse_block_mapping_value
+    if not self.check_token(KeyToken, ValueToken, BlockEndToken):
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/yaml/scanner.py", line 115, in check_token
+    while self.need_more_tokens():
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/yaml/scanner.py", line 152, in need_more_tokens
+    self.stale_possible_simple_keys()
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/yaml/scanner.py", line 291, in stale_possible_simple_keys
+    raise ScannerError("while scanning a simple key", key.mark,
+yaml.scanner.ScannerError: while scanning a simple key
+  in "/root/xiaozhi-server/main/xiaozhi-server/data/.config.yaml", line 2, column 1
+could not find expected ':'
+  in "/root/xiaozhi-server/main/xiaozhi-server/data/.config.yaml", line 4, column 1
+
+(xiaozhi) root@iZbp1af2u8l2dedugzbauhZ:~/xiaozhi-server/main/xiaozhi-server# cat -A data/.config.yaml
+server:$
+websocket:ws://116.62.51.233:8000/xiaozhi/v1/$
+$
+selected module:$
+LLM: ChatGLMLLM$
+$
+LLM:$
+ChatGLMLLM:$
+api_key:c674875256b54454bcc184dc9f997a9a.kF2KXQ8XJjljUeg6$
+
+(xiaozhi) root@iZbp1af2u8l2dedugzbauhZ:~/xiaozhi-server/main/xiaozhi-server# python app.py
+260709 13:02:20[0.9.4_00000000000000][core.utils.gc_manager]-INFO-启动全局GC管理器，间隔120秒
+260709 13:02:21[0.9.4_00000000000000][core.utils.modules_initialize]-INFO-初始化组件: llm成功 ChatGLMLLM
+260709 13:02:21[0.9.4_00000000000000][core.utils.modules_initialize]-INFO-初始化组件: intent成功 function_call
+260709 13:02:21[0.9.4_00000000000000][core.utils.modules_initialize]-INFO-初始化组件: memory成功 nomem
+260709 13:02:21[0.9.4_00000000000000][core.providers.vad.silero]-INFO-SileroVAD
+260709 13:02:21[0.9.4_00000000000000][core.utils.modules_initialize]-INFO-初始化组件: vad成功 SileroVAD
+260709 13:02:28[0.9.4_00000000000000][core.providers.asr.sherpa_onnx_local]-INFO-正在下载模型文件: model.int8.onnx (from pengzhendong/sherpa-onnx-paraformer-zh-small-2024-03-09)
+2026-07-09 13:02:28,773 - modelscope - INFO - Intra-cloud acceleration enabled for downloading from pengzhendong/sherpa-onnx-paraformer-zh-small-2024-03-09
+2026-07-09 13:02:28,912 - modelscope - WARNING - Repo pengzhendong/sherpa-onnx-paraformer-zh-small-2024-03-09 not exists on https://www.modelscope.cn, will try on alternative endpoint https://www.modelscope.ai.
+2026-07-09 13:02:29,262 - modelscope - ERROR - Repo pengzhendong/sherpa-onnx-paraformer-zh-small-2024-03-09 not exists on either https://www.modelscope.cn or https://www.modelscope.ai
+260709 13:02:29[0.9.4_00000000000000][core.providers.asr.sherpa_onnx_local]-ERROR-模型文件处理失败: <Response [404]>
+260709 13:02:29[0.9.4_00000000000000][core.utils.gc_manager]-INFO-GC循环任务被取消
+260709 13:02:29[0.9.4_00000000000000][core.utils.gc_manager]-INFO-GC循环任务已退出
+Traceback (most recent call last):
+  File "/root/xiaozhi-server/main/xiaozhi-server/app.py", line 150, in <module>
+    asyncio.run(main())
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/asyncio/base_events.py", line 649, in run_until_complete
+    return future.result()
+  File "/root/xiaozhi-server/main/xiaozhi-server/app.py", line 72, in main
+    ws_server = WebSocketServer(config)
+  File "/root/xiaozhi-server/main/xiaozhi-server/core/websocket_server.py", line 47, in __init__
+    modules = initialize_modules(
+  File "/root/xiaozhi-server/main/xiaozhi-server/core/utils/modules_initialize.py", line 96, in initialize_modules
+    modules["asr"] = initialize_asr(config)
+  File "/root/xiaozhi-server/main/xiaozhi-server/core/utils/modules_initialize.py", line 123, in initialize_asr
+    new_asr = asr.create_instance(
+  File "/root/xiaozhi-server/main/xiaozhi-server/core/utils/asr.py", line 22, in create_instance
+    return sys.modules[lib_name].ASRProvider(*args, **kwargs)
+  File "/root/xiaozhi-server/main/xiaozhi-server/core/providers/asr/sherpa_onnx_local.py", line 68, in __init__
+    model_file_download(
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/modelscope/hub/file_download.py", line 89, in model_file_download
+    return _repo_file_download(
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/modelscope/hub/file_download.py", line 217, in _repo_file_download
+    endpoint = _api.get_endpoint_for_read(repo_id=repo_id, repo_type=repo_type)
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/modelscope/hub/api.py", line 528, in get_endpoint_for_read
+    self.repo_exists(
+  File "/root/miniconda3/envs/xiaozhi/lib/python3.10/site-packages/modelscope/hub/api.py", line 686, in repo_exists
+    raise HTTPError(r)
+requests.exceptions.HTTPError: <Response [404]>

@@ -52,7 +52,7 @@ class ASRProvider(ASRProviderBase):
                 "model.int8.onnx": os.path.join(self.model_dir, "model.int8.onnx"),
                 "tokens.txt": os.path.join(self.model_dir, "tokens.txt"),
             }
-            download_model_id = "pengzhendong/sherpa-onnx-paraformer-zh-small-2024-03-09"
+            download_model_id = "csukuangfj/sherpa-onnx-paraformer-zh-small-2024-03-09"
         else:
             model_files = {
                 "model.int8.onnx": os.path.join(self.model_dir, "model.int8.onnx"),
